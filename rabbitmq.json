@@ -1,0 +1,31 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": ""
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "eu-west-1",
+    "source_ami": "ami-47a23a30",
+    "instance_type": "t2.small",
+    "ssh_username": "ubuntu",
+    "ami_name": "rabbit-mq-digital-eq-{{timestamp}}"
+  }], 
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "sudo touch /etc/apt/sources.list.d/rabbitmq.list",
+      "sudo chmod a+w /etc/apt/sources.list.d/rabbitmq.list",
+      "sudo echo 'deb http://www.rabbitmq.com/debian/ testing main' > /etc/apt/sources.list.d/rabbitmq.list",
+      "sudo chmod a-w /etc/apt/sources.list.d/rabbitmq.list",
+      "sudo curl https://www.rabbitmq.com/rabbitmq-signing-key-public.asc -o /tmp/rabbitmq-signing-key-public.asc",
+      "sudo apt-key add /tmp/rabbitmq-signing-key-public.asc",
+      "sudo rm /tmp/rabbitmq-signing-key-public.asc",
+      "sudo apt-get -qy update",
+      "sudo apt-get -qy install rabbitmq-server",
+      "sudo rabbitmqctl add_user survey_runner changeit"
+    ]
+  }]
+}

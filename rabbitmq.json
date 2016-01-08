@@ -14,18 +14,16 @@
     "ami_name": "rabbit-mq-digital-eq-{{timestamp}}"
   }], 
   "provisioners": [{
-    "type": "shell",
-    "inline": [
-      "sudo touch /etc/apt/sources.list.d/rabbitmq.list",
-      "sudo chmod a+w /etc/apt/sources.list.d/rabbitmq.list",
-      "sudo echo 'deb http://www.rabbitmq.com/debian/ testing main' > /etc/apt/sources.list.d/rabbitmq.list",
-      "sudo chmod a-w /etc/apt/sources.list.d/rabbitmq.list",
-      "sudo curl https://www.rabbitmq.com/rabbitmq-signing-key-public.asc -o /tmp/rabbitmq-signing-key-public.asc",
-      "sudo apt-key add /tmp/rabbitmq-signing-key-public.asc",
-      "sudo rm /tmp/rabbitmq-signing-key-public.asc",
-      "sudo apt-get -qy update",
-      "sudo apt-get -qy install rabbitmq-server",
-      "sudo rabbitmqctl add_user survey_runner changeit"
-    ]
+      "type": "shell",
+      "inline": [
+        "sleep 30",
+        "sudo apt-get install software-properties-common",
+        "sudo apt-add-repository ppa:ansible/ansible",
+        "sudo /usr/bin/apt-get update",
+        "sudo /usr/bin/apt-get -y install ansible"
+      ]
+  }, {
+      "type" : "ansible-local",
+      "playbook_file" : "./ansible/rabbitmq.yml"
   }]
 }

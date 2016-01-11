@@ -11,7 +11,7 @@
          instance_type: t2.small
          image: ami-47a23a30
          wait: true
-         exact_count: 1
+         exact_count: 2
          region: eu-west-1
          count_tag:
             Name: Rabbit
@@ -33,14 +33,8 @@
   gather_facts: true
 
   tasks:
-   - name: Echo Rabbit into Hostname
-     command: echo rabbit > /etc/hostname
-
-   - name: Echo 127.0.0.1 to rabbitmq
-     command: echo '127.0.0.1 rabbit' >> /etc/hosts
-
-   - name: Change the hostname
-     command: hostname -F /etc/hostname
+   - name: Change hostname to rabbit mq
+     hostname: name=rabbitmq
 
    - name: Create rabbitq source  file
      command: sudo touch /etc/apt/sources.list.d/rabbitmq.list
@@ -75,3 +69,15 @@
 
    - name: Set Permissions
      command: sudo rabbitmqctl set_permissions survey_runner '.*' '.*' '.*'
+
+   - name: Create the rabbit env conf file
+     command: sudo touch /etc/rabbitmq/rabbitmq-env.conf
+   
+   - name: Change permission
+     command: sudo chmod a+w /etc/rabbitmq/rabbitmq-env.conf
+
+   - name: Set use long name to true
+     command: sudo echo 'RABBITMQ_USE_LONGNAME=true' > /etc/rabbitmq/rabbitmq-env.conf
+
+   - name: Change permission back
+     command: sudo chmod a-w /etc/rabbitmq/rabbitmq-env.conf

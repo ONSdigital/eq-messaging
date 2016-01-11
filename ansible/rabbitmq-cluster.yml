@@ -1,0 +1,27 @@
+---
+
+- hosts: rabbitmq1.eq.ons.digital
+  sudo: yes
+  user: ubuntu
+ # roles:
+  #  - warrenbailey.rabbitmq
+
+  vars:
+   rabbitmq_create_cluster: yes
+   rabbitmq_cluster_master: rabbitmq1.eq.ons.digital
+   rabbitmq_use_longname: 'true'
+
+  tasks:
+   - name: inspect ansible hosts
+     debug: var=ansible_hostname
+
+- hosts: rabbitmq2.eq.ons.digital
+  sudo: yes
+  user: ubuntu
+  roles:
+    - warrenbailey.rabbitmq
+
+  vars:
+   rabbitmq_use_longname: 'true'
+   rabbitmq_create_cluster: yes
+   rabbitmq_cluster_master: rabbitmq1.eq.ons.digital

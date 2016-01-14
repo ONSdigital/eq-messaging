@@ -1,40 +1,13 @@
 ---
-- hosts: localhost
-  connection: local
-  gather_facts: true
 
-  tasks:
-   - name: Provision a set of instances
-     ec2:
-         key_name: my-key-pair
-         group: my-security-group
-         instance_type: t2.small
-         image: ami-47a23a30
-         wait: true
-         exact_count: 2
-         region: eu-west-1
-         count_tag:
-            Name: Rabbit
-         instance_tags:
-            Name: Rabbit MQ
-     register: ec2
-
-   - name: Add all instance public IPs to host group
-     add_host: hostname={{ item.public_ip }} groups=ec2hosts
-     with_items: ec2.instances
-
-   - name: Wait for SSH to come up
-     local_action: wait_for host={{ item.public_ip }} port=22 delay=60 timeout=320 state=started
-     with_items: ec2.instances
-
-- hosts: ec2hosts
+- hosts: all
   sudo: yes
   user: ubuntu
   gather_facts: true
 
   tasks:
-   - name: Change hostname to rabbit mq
-     hostname: name=rabbitmq
+#   - name: Change hostname to rabbit mq
+#    hostname: name={{inventory_hostname}}
 
    - name: Create rabbitq source  file
      command: sudo touch /etc/apt/sources.list.d/rabbitmq.list
@@ -70,14 +43,14 @@
    - name: Set Permissions
      command: sudo rabbitmqctl set_permissions survey_runner '.*' '.*' '.*'
 
-   - name: Create the rabbit env conf file
-     command: sudo touch /etc/rabbitmq/rabbitmq-env.conf
+#   - name: Create the rabbit env conf file
+#     command: sudo touch /etc/rabbitmq/rabbitmq-env.conf
    
-   - name: Change permission
-     command: sudo chmod a+w /etc/rabbitmq/rabbitmq-env.conf
+#   - name: Change permission
+#    command: sudo chmod a+w /etc/rabbitmq/rabbitmq-env.conf
 
-   - name: Set use long name to true
-     command: sudo echo 'RABBITMQ_USE_LONGNAME=true' > /etc/rabbitmq/rabbitmq-env.conf
+#   - name: Set use long name to true
+#     command: sudo echo 'RABBITMQ_USE_LONGNAME=true' > /etc/rabbitmq/rabbitmq-env.conf
 
-   - name: Change permission back
-     command: sudo chmod a-w /etc/rabbitmq/rabbitmq-env.conf
+#   - name: Change permission back
+#     command: sudo chmod a-w /etc/rabbitmq/rabbitmq-env.conf

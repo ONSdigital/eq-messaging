@@ -14,12 +14,6 @@
    rabbitmq_ha_mode: all
    rabbitmq_ha_pattern: '.*'
 
-
-  tasks:
-   - name: inspect ansible hosts
-     debug: var=ansible_hostname
-
-
 - hosts: rabbitmq2.eq.ons.digital
   sudo: yes
   user: ubuntu

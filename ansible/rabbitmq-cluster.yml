@@ -1,0 +1,30 @@
+---
+
+- hosts: rabbitmq1.eq.ons.digital
+  sudo: yes
+  user: ubuntu
+  roles:
+    - warrenbailey.rabbitmq
+
+  vars:
+   rabbitmq_create_cluster: yes
+   rabbitmq_cluster_master: rabbitmq1.eq.ons.digital
+   rabbitmq_use_longname: 'true'
+   rabbitmq_ha_enabled: yes
+   rabbitmq_ha_mode: all
+   rabbitmq_ha_pattern: '.*'
+
+- hosts: rabbitmq2.eq.ons.digital
+  sudo: yes
+  user: ubuntu
+  roles:
+    - warrenbailey.rabbitmq
+
+  vars:
+   rabbitmq_use_longname: 'true'
+   rabbitmq_cluster_master: rabbitmq1.eq.ons.digital
+   rabbitmq_create_cluster: yes
+   rabbitmq_ha_enabled: yes
+   rabbitmq_ha_mode: all
+   rabbitmq_ha_pattern: '.*'
+

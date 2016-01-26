@@ -14,6 +14,9 @@
    rabbitmq_ha_mode: all
    rabbitmq_ha_pattern: '.*'
 
+  tasks:
+   - rabbitmq_plugin: names=rabbitmq_management state=enabled
+
 - hosts: "{{deploy_env}}-rabbitmq2.eq.ons.digital"
   sudo: yes
   user: ubuntu
@@ -27,3 +30,6 @@
    rabbitmq_ha_enabled: yes
    rabbitmq_ha_mode: all
    rabbitmq_ha_pattern: '.*'
+
+  tasks:
+   - rabbitmq_plugin: names=rabbitmq_management state=enabled

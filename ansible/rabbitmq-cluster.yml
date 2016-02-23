@@ -1,6 +1,6 @@
 ---
 
-- hosts: "{{deploy_env}}-rabbitmq1.eq.ons.digital"
+- hosts: "{{deploy_env}}-rabbitmq1.{{deploy_dns}}"
   sudo: yes
   user: ubuntu
   roles:
@@ -8,7 +8,7 @@
 
   vars:
    rabbitmq_create_cluster: yes
-   rabbitmq_cluster_master: "{{deploy_env}}-rabbitmq1.eq.ons.digital"
+   rabbitmq_cluster_master: "{{deploy_env}}-rabbitmq1.{{deploy_dns}}"
    rabbitmq_use_longname: 'true'
    rabbitmq_ha_enabled: yes
    rabbitmq_ha_mode: all
@@ -54,7 +54,7 @@
                     tags=administrator
 
 
-- hosts: "{{deploy_env}}-rabbitmq2.eq.ons.digital"
+- hosts: "{{deploy_env}}-rabbitmq2.{{deploy_dns}}"
   sudo: yes
   user: ubuntu
   roles:
@@ -62,7 +62,7 @@
 
   vars:
    rabbitmq_use_longname: 'true'
-   rabbitmq_cluster_master: "{{deploy_env}}-rabbitmq1.eq.ons.digital"
+   rabbitmq_cluster_master: "{{deploy_env}}-rabbitmq1.{{deploy_dns}}"
    rabbitmq_create_cluster: yes
    rabbitmq_ha_enabled: yes
    rabbitmq_ha_mode: all

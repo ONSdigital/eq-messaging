@@ -40,7 +40,7 @@ sudo ansible-galaxy install warrenbailey.rabbitmq
 setup the HA capability so that queues replicated to each other.
 
 ```
-ansible-playbook -i 'test-rabbitmq1.eq.ons.digital,test-rabbitmq2.eq.ons.digital'  --private-key digital-eq-keypair.pem ansible/rabbitmq-cluster.yml --extra-vars "deploy_env=test
+ansible-playbook -i 'test-rabbitmq1.eq.ons.digital,test-rabbitmq2.eq.ons.digital'  --private-key digital-eq-keypair.pem ansible/rabbitmq-cluster.yml --extra-vars "deploy_env=test, deploy_dns=eq.ons.digital"
 ```
 
 ## How to run post install test

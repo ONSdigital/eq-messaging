@@ -5,6 +5,9 @@
   user: ubuntu
   roles:
     - warrenbailey.rabbitmq
+    - role: jnv.unattended-upgrades
+      unattended_origins_patterns:
+      - 'origin=Ubuntu,archive=${distro_codename}-security'
 
   vars:
    rabbitmq_create_cluster: yes
@@ -59,6 +62,9 @@
   user: ubuntu
   roles:
     - warrenbailey.rabbitmq
+    - role: jnv.unattended-upgrades
+      unattended_origins_patterns:
+      - 'origin=Ubuntu,archive=${distro_codename}-security'
 
   vars:
    rabbitmq_use_longname: 'true'

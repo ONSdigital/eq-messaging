@@ -58,3 +58,20 @@ python receive.py
 ```
 
 This will then print out to stdout, "[x] Received X", where X will be the message from the queue.
+
+## Testing with Vagrant
+
+This repo includes a Vagrant file that brings up a single Ubuntu Trusty machine (14.0.4LTS) to test the ansible scripts against.
+
+To install Vagrant on a mac:
+```
+brew cask install virtualbox
+brew cask install vagrant
+```
+And then to install the Ansible dependencies:
+```
+sudo ansible-galaxy install jnv.unattended-upgrades
+
+```
+
+You can then issue `vagrant up` which will create a new VM, provision it with the role.yml and allow you to ssh into the machine to check the state has been correctly set. This gives a useful target for testing and developing without having to recreate an entire infrastructure environment.

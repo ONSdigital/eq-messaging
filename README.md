@@ -75,3 +75,14 @@ sudo ansible-galaxy install jnv.unattended-upgrades
 ```
 
 You can then issue `vagrant up` which will create a new VM, provision it with the role.yml and allow you to ssh into the machine to check the state has been correctly set. This gives a useful target for testing and developing without having to recreate an entire infrastructure environment.
+
+To test the rsyslog capabilities, make sure you have tcpdump installed and run the
+following in a terminal:
+
+```
+sudo tcpdump -i vboxnet2 -X -v 'udp port 514'
+```
+
+This will dump the feed from the rsyslogd collector so that you can see the logs
+being sent off the VM. To generate extra traffic try becoming root inside your
+vagrant box to create audit events.

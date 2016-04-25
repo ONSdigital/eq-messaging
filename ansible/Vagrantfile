@@ -8,11 +8,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "ubuntu" do |ubuntu|
     ubuntu.vm.box = "ubuntu/trusty64"
   end
-
+  config.vm.network "private_network", ip: "192.168.50.4"
   config.vm.provision :shell, inline: "sudo apt-get install -y python python-apt aptitude"
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "role.yml"
     ansible.verbose = "vv"
     ansible.sudo = true
+    ansible.extra_vars = {
+      rsyslogd_server_IP: "192.168.50.1"
+    }
   end
 end

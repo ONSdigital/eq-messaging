@@ -1,0 +1,17 @@
+# 60-rsyslog.conf
+#
+# Ships our logs to the centralised log collector.
+#
+#
+
+# This line (from template) already included in base syslog file
+#
+#$ModLoad imuxsock # local message reception
+#$WorkDirectory /rsyslog/work # default location for work (spool) files
+
+$ActionQueueType LinkedList # use asynchronous processing
+$ActionQueueFileName srvrfwd # set file name, also enables disk mode
+$ActionResumeRetryCount -1 # infinite retries on insert failure
+$ActionQueueSaveOnShutdown on # save in-memory data if rsyslog shuts down
+*.warn;auth.notice,local6.*  @{{ rsyslogd_server_IP }}
+#*.* @@localhost

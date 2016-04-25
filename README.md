@@ -80,7 +80,13 @@ To test the rsyslog capabilities, make sure you have tcpdump installed and run t
 following in a terminal:
 
 ```
-sudo tcpdump -i vboxnet2 -X -v 'udp port 514'
+ifconfig
+```
+Look for the first device named 'vboxnet' followed by a number.
+Then plug that interface name into the following:
+
+```
+sudo tcpdump -i <INTERFACE_NAME> -X -v 'udp port 514'
 ```
 
 This will dump the feed from the rsyslogd collector so that you can see the logs

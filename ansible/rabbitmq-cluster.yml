@@ -8,6 +8,8 @@
     - role: jnv.unattended-upgrades
       unattended_origins_patterns:
       - 'origin=Ubuntu,archive=${distro_codename}-security'
+    - audit
+
 
   vars:
    rabbitmq_create_cluster: yes
@@ -65,6 +67,7 @@
     - role: jnv.unattended-upgrades
       unattended_origins_patterns:
       - 'origin=Ubuntu,archive=${distro_codename}-security'
+    - audit
 
   vars:
    rabbitmq_use_longname: 'true'

@@ -1,0 +1,27 @@
+---
+# tasks file for audit
+- name: install prerequisites
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+    - auditd
+
+- name: configure security
+  template: src={{ item }}.j2 dest=/{{ item }}
+  with_items:
+    - etc/pam.d/common-account
+    - etc/pam.d/common-auth
+    - etc/pam.d/common-password
+    - etc/ssh/sshd_config
+    - etc/issue.net
+    - etc/login.defs
+  notify:
+    - bounce ssh
+
+- name: configure rsyslogd
+  template: src={{ item }}.j2 dest=/{{ item }}
+  with_items:
+    - etc/rsyslog.d/60-rsyslog.conf
+    - etc/rsyslog.d/70-auditd.conf
+    - etc/rsyslog.d/80-appaudit.conf
+  notify:
+    - bounce rsyslog

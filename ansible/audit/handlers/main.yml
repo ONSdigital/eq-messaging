@@ -1,0 +1,8 @@
+---
+# handlers file for audit
+
+- name: bounce ssh
+  service: name=ssh state=restarted
+
+- name: bounce rsyslog
+  service: name=rsyslog state=restarted

@@ -20,44 +20,9 @@
    rabbitmq_ha_pattern: '.*'
 
   tasks:
-   - rabbitmq_plugin: names=rabbitmq_management state=enabled
+   - include: tasks/rabbitmq.yml
 
-   # remove the default 'guest' user who has administrator access
-   - rabbitmq_user: user=guest
-                    state=absent
-
-   # Create a user who can write to the queues
-   - rabbitmq_user: user={{rabbitmq_write_user}}
-                    password={{rabbitmq_write_password}}
-                    force=yes
-                    vhost=/
-                    write_priv=.*
-                    configure_priv=.*
-                    read_priv=.*
-                    state=present
-
-   # Create a user who can read from queues
-   - rabbitmq_user: user={{rabbitmq_read_user}}
-                    password={{rabbitmq_read_password}}
-                    force=yes
-                    vhost=/
-                    read_priv=.*
-                    write_priv=.*
-                    configure_priv=.*
-                    state=present
-
-
-   # Create an admin user
-   - rabbitmq_user: user={{rabbitmq_admin_user}}
-                    password={{rabbitmq_admin_password}}
-                    force=yes
-                    vhost=/
-                    configure_priv=.*
-                    read_priv=.*
-                    write_priv=.*
-                    state=present
-                    tags=administrator
-
+   - include: tasks/cloudwatch.yml host={{deploy_env}}-rabbitmq1
 
 - hosts: "{{deploy_env}}-rabbitmq2.{{deploy_dns}}"
   sudo: yes
@@ -78,39 +43,6 @@
    rabbitmq_ha_pattern: '.*'
 
   tasks:
-   - rabbitmq_plugin: names=rabbitmq_management state=enabled
+   - include: tasks/rabbitmq.yml
 
-   # remove the default 'guest' user who has administrator access
-   - rabbitmq_user: user=guest
-                    state=absent
-
-   # Create a user who can write to the queues
-   - rabbitmq_user: user={{rabbitmq_write_user}}
-                    password={{rabbitmq_write_password}}
-                    force=yes
-                    vhost=/
-                    write_priv=.*
-                    configure_priv=.*
-                    read_priv=.*
-                    state=present
-
-   # Create a user who can read from queues
-   - rabbitmq_user: user={{rabbitmq_read_user}}
-                    password={{rabbitmq_read_password}}
-                    force=yes
-                    vhost=/
-                    read_priv=.*
-                    write_priv=.*
-                    configure_priv=.*
-                    state=present
-
-   # Create an admin user
-   - rabbitmq_user: user={{rabbitmq_admin_user}}
-                    password={{rabbitmq_admin_password}}
-                    force=yes
-                    vhost=/
-                    configure_priv=.*
-                    read_priv=.*
-                    write_priv=.*
-                    state=present
-                    tags=administrator
+   - include: tasks/cloudwatch.yml host={{deploy_env}}-rabbitmq2

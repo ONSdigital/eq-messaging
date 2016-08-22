@@ -4,7 +4,7 @@
   sudo: yes
   user: ubuntu
   roles:
-    - warrenbailey.rabbitmq
+    - alexeymedvedchikov.rabbitmq
     - role: jnv.unattended-upgrades
       unattended_origins_patterns:
       - 'origin=Ubuntu,archive=${distro_codename}-security'
@@ -63,7 +63,7 @@
   sudo: yes
   user: ubuntu
   roles:
-    - warrenbailey.rabbitmq
+    - alexeymedvedchikov.rabbitmq
     - role: jnv.unattended-upgrades
       unattended_origins_patterns:
       - 'origin=Ubuntu,archive=${distro_codename}-security'

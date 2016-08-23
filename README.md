@@ -30,10 +30,10 @@ EOF
 
 ```
 
-7. Install the warrenbailey.rabbitmq role from Ansible galaxy (this is where the magic happens)
+7. Install the alexeymedvedchikov.rabbitmq role from Ansible galaxy (this is where the magic happens)
 
 ```
-sudo ansible-galaxy install warrenbailey.rabbitmq
+sudo ansible-galaxy install alexeymedvedchikov.rabbitmq
 ```
 
 8. Run the rabbit mq playbook in this repository, this should provision the two EC2 instances, cluster them together and

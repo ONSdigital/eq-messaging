@@ -1,4 +1,5 @@
 ---
+ - apt: name=ntp update_cache=yes
  - apt: name=awscli update_cache=yes
  - copy: src=tasks/cluster_status.sh dest=/opt/cluster_status.sh owner=ubuntu group=ubuntu mode=0754
  - lineinfile: dest=/etc/environment line="METRIC_NAME={{host}}"

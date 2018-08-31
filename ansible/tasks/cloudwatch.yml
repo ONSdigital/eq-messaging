@@ -5,4 +5,4 @@
  - lineinfile: dest=/etc/environment line="METRIC_NAME={{host}}"
  - lineinfile: dest=/etc/environment line="NAMESPACE=RabbitMQClusterStatus"
  - lineinfile: dest=/etc/environment line="REGION={{region}}"
- - cron: name="Rabbit MQ Cluster check" minute="*/5" job="/opt/cluster_status.sh"
+ - cron: name="Rabbit MQ Cluster check" minute="*/5" job="/opt/cluster_status.sh >> /var/log/cluster_check.log 2>&1"
